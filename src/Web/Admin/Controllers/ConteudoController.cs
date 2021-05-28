@@ -32,24 +32,24 @@ namespace Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthUsuarioFilter(ConteudoPermissoes.Gerenciar, AuthPermissaoTipoAcao.Permitir)]
-        public IActionResult Form(ConteudoViewModel vm)
+        public IActionResult Form(ConteudoViewModel conteudo)
         {
             try
             {
-                if (vm == null || !ModelState.IsValid)
+                if (conteudo == null || !ModelState.IsValid)
                 {
                     ExibirMensagemErro(MensagemResource.ModelStateInvalido);
-                    return View(vm);
+                    return View(conteudo);
                 }
 
                 var model = new ConteudoEntity
                 {
-                    Id = vm.Id,
-                    Status = vm.Status,
-                    Titulo = vm.Titulo,
-                    Descricao = vm.Descricao,
-                    Assunto = vm.Assunto,
-                    IdConteudo = vm.IdConteudoChave.GetValueOrDefault()
+                    Id = conteudo.Id,
+                    Status = conteudo.Status,
+                    Titulo = conteudo.Titulo,
+                    Descricao = conteudo.Descricao,
+                    Assunto = conteudo.Assunto,
+                    IdConteudo = conteudo.IdConteudoChave.GetValueOrDefault()
                 };
 
                 ConteudoService.Salvar(model);
@@ -61,9 +61,9 @@ namespace Admin.Controllers
             catch (MensagemException ex)
             {
                 ExibirMensagemErro(ex);
-                return View(vm);
+                return View(conteudo);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ExibirMensagemErro(MensagemResource.Erro);
                 return RedirectToAction(nameof(Form));
@@ -95,7 +95,7 @@ namespace Admin.Controllers
             {
                 return BadRequest(ex.GetMessages());
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest(MensagemResource.Erro);
             }
