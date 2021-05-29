@@ -10,12 +10,11 @@ namespace Framework.Security.Permissoes
         public static KeyValuePair<string, AuthPermissaoTipoAcao> Permitir => new KeyValuePair<string, AuthPermissaoTipoAcao>("{DC830BDA-9991-4B44-8BE5-A60F99D1E90B}", AuthPermissaoTipoAcao.Permitir);
 
         protected override string Grupo => NomeGrupo;
-        public static string NomeGrupo => "Grupo de Acesso";
-        public static string Descricao => "Gerenciar Grupo de Acesso";
-
+        public static string NomeGrupo => "Perfis de usuários";
+        public static string Descricao => "Gerenciar Perfis de usuários";
         public override void Init()
         {
-            Registrar(Gerenciar, Descricao)
+            Registrar(Gerenciar, Descricao, false)
                 .AddAcao(Permitir.Key, Permitir.Value);
         }
     }

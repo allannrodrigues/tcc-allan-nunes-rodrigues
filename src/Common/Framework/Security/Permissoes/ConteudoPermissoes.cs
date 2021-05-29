@@ -12,10 +12,9 @@ namespace Framework.Security.Permissoes
         protected override string Grupo => NomeGrupo;
         public static string NomeGrupo => "Conteúdos";
         public static string Descricao => "Gerenciar Conteúdos";
-
         public override void Init()
         {
-            Registrar(Gerenciar, Descricao)
+            Registrar(Gerenciar, Descricao, true)
                 .AddAcao(Permitir.Key, Permitir.Value);
         }
     }

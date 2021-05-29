@@ -7,7 +7,7 @@ namespace Framework.Security.Authorization
     {
         protected abstract string Grupo { get; }
 
-        protected AuthPermissao Registrar(string id, string descricao)
+        protected AuthPermissao Registrar(string id, string descricao, bool permiteAlterar)
         {
             var idFuncionalidade = new Guid(id);
 
@@ -18,7 +18,7 @@ namespace Framework.Security.Authorization
                     return funcionalidade;
             }
 
-            return new AuthPermissao(idFuncionalidade, Grupo, descricao);
+            return new AuthPermissao(idFuncionalidade, Grupo, descricao, permiteAlterar);
         }
 
         public abstract void Init();

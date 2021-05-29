@@ -51,7 +51,7 @@ namespace NpsFunctions.Triggers
                 var requestBody = await request.ReadToEndAsync();
                 var payload = JsonConvert.DeserializeObject<SalvarNpsCommand>(requestBody);
 
-                await _produtoService.SalvarNps(id.Value, payload.Nota.Value, payload.Comentario);ay
+                await _produtoService.SalvarNps(id.Value, payload.Nota.Value, payload.Comentario);
 
                 stopwatch.Stop();
 

@@ -42,12 +42,12 @@
             </li>
             <li asp-auth-grupo="new[]{ProdutoPermissoes.Gerenciar }" class="@IsSelected(Html, new List<KeyValuePair<string, string>>{new KeyValuePair<string, string>("Produto","*")})">
                 <a asp-controller="Produto" asp-action="Index">
-                    <i class="fa fa-shopping-bag"></i> <span class="nav-label">Produtos </span>
+                    <i class="fa fa-shopping-bag"></i> <span class="nav-label">@ProdutoPermissoes.NomeGrupo </span>
                 </a>
             </li>
             <li asp-auth-grupo="new[]{ ConteudoPermissoes.Gerenciar }" class="@IsSelected(Html, new List<KeyValuePair<string, string>>{new KeyValuePair<string, string>("Conteudo","*")})">
                 <a asp-controller="Conteudo" asp-action="Index">
-                    <i class="fa fa-file-text-o"></i> <span class="nav-label">Conteúdos </span>
+                    <i class="fa fa-file-text-o"></i> <span class="nav-label">@ConteudoPermissoes.NomeGrupo </span>
                 </a>
             </li>
 
@@ -58,12 +58,12 @@
                 <ul class="nav nav-second-level">
                     <li asp-auth-perm="@GrupoUsuarioPermissoes.Gerenciar" class="@IsSelected(Html, new List<KeyValuePair<string, string>>{new KeyValuePair<string, string>("GrupoUsuario","*")})">
                         <a asp-controller="GrupoUsuario" asp-action="Index">
-                            Grupo de Usuários
+                            @GrupoUsuarioPermissoes.NomeGrupo
                         </a>
                     </li>
                     <li asp-auth-perm="@UsuarioPermissoes.Gerenciar" class="@IsSelected(Html, new List<KeyValuePair<string, string>>{new KeyValuePair<string, string>("Usuario","*")})">
                         <a asp-controller="Usuario" asp-action="Index">
-                            Usuários
+                            @UsuarioPermissoes.NomeGrupo
                         </a>
                     </li>
                 </ul>

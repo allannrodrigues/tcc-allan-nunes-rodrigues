@@ -9,11 +9,12 @@ namespace Framework.Security.Authorization
     {
         public static List<AuthPermissao> Todas;
 
-        public AuthPermissao(Guid id, string grupo, string descricao)
+        public AuthPermissao(Guid id, string grupo, string descricao, bool permiteAlterar)
         {
             Id = id;
             Grupo = grupo;
             Descricao = descricao;
+            PermiteAlterar = permiteAlterar;
             Acoes = new List<AuthPermissaoAcao>();
 
             if (Todas == null)
@@ -25,6 +26,7 @@ namespace Framework.Security.Authorization
         public Guid Id { get; private set; }
         public string Grupo { get; }
         public string Descricao { get; private set; }
+        public bool PermiteAlterar { get; private set; }
 
         public IEnumerable<AuthPermissaoAcao> Acoes { get; }
 

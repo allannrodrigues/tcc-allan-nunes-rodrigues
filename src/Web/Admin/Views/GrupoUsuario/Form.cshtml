@@ -41,7 +41,7 @@
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label asp-for="Nome"></label>
-                                    <input asp-for="Nome" class="form-control" type="text"  />
+                                    <input asp-for="Nome" class="form-control" type="text" />
                                     <span asp-validation-for="Nome" class="text-danger small"></span>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                         </div>
-                        @foreach (var item in Model.Permissoes.OrderBy(c => c.Grupo))
+                        @foreach (var item in Model.Permissoes.Where(c=> (!c.PermiteAlterar && Model.Id == 1) || c.PermiteAlterar).OrderBy(c => c.Grupo))
                         {
                             <div class="hr-line-dashed"></div>
                             <div class="row">
@@ -66,16 +66,30 @@
                                     <div class="col-md-8">
                                         @foreach (var acao in item.Acoes.OrderBy(c => (int)c.Acao))
                                         {
-                                            <label class="checkbox-inline i-checks no-margins">
-                                                @if (Model.PermissoesDoGrupo.Contains(acao.Id))
+                                        <label class="checkbox-inline i-checks no-margins">
+                                            @if (Model.PermissoesDoGrupo.Contains(acao.Id))
+                                            {
+                                                if (item.PermiteAlterar)
                                                 {
-                                                    <input type="checkbox" name="PermissoesDoGrupo" value="@acao.Id" checked=""> @acao.Acao.GetDescription()
+                                                    <input type="checkbox" name="PermissoesDoGrupo" value="@acao.Id" checked> @acao.Acao.GetDescription()
                                                 }
                                                 else
                                                 {
+                                                    <input type="checkbox" name="PermissoesDoGrupo" value="@acao.Id" checked disabled> @acao.Acao.GetDescription()
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (item.PermiteAlterar)
+                                                {
                                                     <input type="checkbox" name="PermissoesDoGrupo" value="@acao.Id"> @acao.Acao.GetDescription()
                                                 }
-                                            </label>
+                                                else
+                                                {
+                                                    <input type="checkbox" name="PermissoesDoGrupo" value="@acao.Id" disabled> @acao.Acao.GetDescription()
+                                                }
+                                            }
+                                        </label>
                                         }
                                     </div>
                                 </div>
