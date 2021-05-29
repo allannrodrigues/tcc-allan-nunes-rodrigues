@@ -21,13 +21,13 @@ namespace Admin.Controllers
         [HttpPost]
         [AuthUsuarioFilter(false)]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(LoginViewModel vm)
+        public async Task<IActionResult> Index(LoginViewModel login)
         {
             try
             {
                 ModelState.Clear();
 
-                var model = UsuarioService.Autenticar(vm?.Email, vm?.Senha);
+                var model = UsuarioService.Autenticar(login?.Email, login?.Senha);
 
                 await AutenticarUsuarioAsync(new UsuarioAuthViewModel(model));
 
@@ -37,12 +37,12 @@ namespace Admin.Controllers
             {
                 ExibirMensagemErro(ex);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ExibirMensagemErro(MensagemResource.Erro);
             }
 
-            return View(vm);
+            return View(login);
         }
 
         [AuthUsuarioFilter(false)]
@@ -71,13 +71,14 @@ namespace Admin.Controllers
             {
                 ExibirMensagemErro(ex);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ExibirMensagemErro(MensagemResource.Erro);
             }
 
             if (!string.IsNullOrWhiteSpace(vm?.ReturnUrl))
                 return Redirect(vm.ReturnUrl);
+
             return RedirectToAction(nameof(Index), "Home");
         }
     }

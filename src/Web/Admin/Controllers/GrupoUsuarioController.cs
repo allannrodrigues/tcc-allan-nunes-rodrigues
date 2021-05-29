@@ -26,24 +26,24 @@ namespace Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthUsuarioFilter(GrupoUsuarioPermissoes.Gerenciar, AuthPermissaoTipoAcao.Permitir)]
-        public IActionResult Form(GrupoUsuarioViewModel vm)
+        public IActionResult Form(GrupoUsuarioViewModel grupoUsuario)
         {
             try
             {
-                if (vm == null || !ModelState.IsValid)
+                if (grupoUsuario == null || !ModelState.IsValid)
                 {
                     ExibirMensagemErro(MensagemResource.ModelStateInvalido);
-                    return View(vm);
+                    return View(grupoUsuario);
                 }
 
                 var model = new GrupoUsuarioEntity
                 {
-                    Id = vm.Id,
-                    Nome = vm.Nome,
-                    Status = vm.Status
+                    Id = grupoUsuario.Id,
+                    Nome = grupoUsuario.Nome,
+                    Status = grupoUsuario.Status
                 };
 
-                GrupoUsuarioServico.Salvar(model, vm.PermissoesDoGrupo);
+                GrupoUsuarioServico.Salvar(model, grupoUsuario.PermissoesDoGrupo);
 
                 ExibirMensagemSucesso(MensagemResource.Sucesso);
 
@@ -53,12 +53,12 @@ namespace Admin.Controllers
             {
                 ExibirMensagemErro(ex);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ExibirMensagemErro(MensagemResource.Erro);
             }
 
-            return RedirectToAction(nameof(Form), new { vm?.Id });
+            return RedirectToAction(nameof(Form), new { grupoUsuario?.Id });
         }
 
         [HttpPost]

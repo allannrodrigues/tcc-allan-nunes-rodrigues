@@ -28,37 +28,37 @@ namespace Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthUsuarioFilter(ProdutoPermissoes.Gerenciar, AuthPermissaoTipoAcao.Permitir)]
-        public async Task<IActionResult> Form(ProdutoViewModel vm)
+        public async Task<IActionResult> Form(ProdutoViewModel produto)
         {
             try
             {
-                if (vm == null || !ModelState.IsValid)
+                if (produto == null || !ModelState.IsValid)
                 {
                     ExibirMensagemErro(MensagemResource.ModelStateInvalido);
-                    return View(vm);
+                    return View(produto);
                 }
 
-                if (string.IsNullOrWhiteSpace(vm.ImagemUrl) && vm.Imagem == null)
+                if (string.IsNullOrWhiteSpace(produto.ImagemUrl) && produto.Imagem == null)
                 {
                     ExibirMensagemErro(MensagemResource.ImagemNaoInformada);
-                    return View(vm);
+                    return View(produto);
                 }
 
                 var model = new ProdutoEntity
                 {
-                    Id = vm.Id,
-                    IdConteudo = vm.IdConteudo ?? throw new InvalidOperationException("IdConteudo NULL"),
-                    Titulo = vm.Titulo,
-                    Codigo = vm.Codigo,
-                    DescricaoLonga = vm.DescricaoLonga,
-                    Status = vm.Status ?? throw new InvalidOperationException("Status NULL"),
-                    CategoriaProduto = vm.CategoriaProduto ?? ApplicationCore.Enuns.ECategoriaProduto.ProdutoFisico,
+                    Id = produto.Id,
+                    IdConteudo = produto.IdConteudo ?? throw new InvalidOperationException("IdConteudo NULL"),
+                    Titulo = produto.Titulo,
+                    Codigo = produto.Codigo,
+                    DescricaoLonga = produto.DescricaoLonga,
+                    Status = produto.Status ?? throw new InvalidOperationException("Status NULL"),
+                    CategoriaProduto = produto.CategoriaProduto ?? ApplicationCore.Enuns.ECategoriaProduto.ProdutoFisico,
                 };
 
-                if (vm.Imagem != null)
+                if (produto.Imagem != null)
                 {
-                    model.Imagem = $"{Guid.NewGuid()}{RecuperarExtensaoDoArquivo(vm.Imagem)}";
-                    await ProdutoService.SalvarImagemAsync(vm.Imagem.OpenReadStream(), model.Imagem);
+                    model.Imagem = $"{Guid.NewGuid()}{RecuperarExtensaoDoArquivo(produto.Imagem)}";
+                    await ProdutoService.SalvarImagemAsync(produto.Imagem.OpenReadStream(), model.Imagem);
                 }
 
                 ProdutoService.Salvar(model);
@@ -71,12 +71,12 @@ namespace Admin.Controllers
             {
                 ExibirMensagemErro(ex);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ExibirMensagemErro(MensagemResource.Erro);
             }
 
-            return View(vm);
+            return View(produto);
         }
 
         [HttpPost]
@@ -137,7 +137,7 @@ namespace Admin.Controllers
             {
                 ExibirMensagemErro(ex.GetMessages());
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ExibirMensagemErro(MensagemResource.Erro);
             }
